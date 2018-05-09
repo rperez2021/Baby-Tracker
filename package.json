@@ -1,0 +1,25 @@
+{
+  "name": "baby-tracker",
+  "version": "1.0.0",
+  "description": "A Tool for Tracking Baby I/O",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rperez2021/Baby-Tracker.git"
+  },
+  "author": "Roberto Perez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rperez2021/Baby-Tracker/issues"
+  },
+  "homepage": "https://github.com/rperez2021/Baby-Tracker#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "sequelize": "^4.37.7"
+  }
+}
