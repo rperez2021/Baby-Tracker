@@ -1,6 +1,6 @@
 var express = require('express')
 var router = express.Router()
-const burger = require('../models/burger.js')
+const burger = require('../models/log.js')
 
 router.get('/', (req, res) => {
   burger.findAll({
