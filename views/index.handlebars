@@ -1,58 +1,54 @@
 <div class="container">
+
         <div class="row section">
-            <div class="col s4">
+ 
+            <div class="col s12">
+                <h3 class="center-align">Baby Tracker</h3>
+            </div>
 
-            </div>
-            <div class="col s4">
-                <h1 class="center-align">Burger Time!</h1>
-                <img class="responsive-img" id="burger" src="/assets/img/burger.png">
-            </div>
-            <div class="col s4">
-
-            </div>
         </div>
-   <div class="divider"></div>
-        <div class="row section">
-            <div class="col s4">
-<h4>Choose Your Burger</h4>
-   {{#each burgers}}
-          {{#unless this.devoured}}
-            <div>
-              <form action="/burgers/{{this.id}}" method="POST">
-                <button type="submit" class='burgerAvailable waves-effect waves-light btn pulse blue'> {{this.burger_name}}</button>
-              </form>
-            </div>
-          {{/unless}}
-        {{/each}}
-            </div>
-            <div class="col s4 center-align"><h4></h4>
-            </div>
-            <div class="col s4">
-<h4>Here are the Burgers You Have Devoured!</h4>
-     {{#each burgers}}
-          {{#if this.devoured}}
-            <div class='burgerEaten'>
-            <div>
-              <form action="/burgers/re_add/{{this.id}}" method="POST">
-                <button type="submit" class='burgerAvailable waves-effect waves-light btn red'> {{this.burger_name}}</button>
-              </form>
-            </div>
-            </div>
-          {{/if}}
-        {{/each}}
-            </div>
-        </div>
-        <div class="divider"></div>
-    </div>
-    
-    
 
-<div class="row">
-    <h2>Add A Burger Option</h2>
-  <div class="col s12">
-    <form action="/burgers" method="POST">
-      <input type="text" id="name" name="burger_name" placeholder="Name Your Burger!" pattern="^[a-zA-Z0-9_ ]{2,20}$" title="Please only use Alphanumeric Characters and have a length < 20">
-      <button type="submit" class="addBurgerButton btn blue pulse">Add It!</button>
-    </form>
-  </div>
+        <main>
+            <div class="row">
+            <div class="col s12">
+                <form action="/log" method="POST">
+                <input type="text" class="datepicker" placeholder="Select Date" name="date">
+            </div>
+           
+           
+            <div class="col s12">
+                <input type="text" class="timepicker" placeholder="Select Time" name="time">
+            </div>
+           
+            <div id="checkbox" class="col s12 input-field">
+                
+                    <p>
+                        <label>
+                            <input type="checkbox" name="poop" />
+                            <span>Poop?</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            <input type="checkbox" name="pee"/>
+                            <span>Pee?</span>
+                        </label>
+                        <input placeholder="# of Oz" id="first_name" type="text" class="validate" name="milk_total">
+                        <label for="first_name">How much Milk did she drink?</label>
+                    </p>
+                    <button class="btn waves-effect waves-light red" type="submit" name="action">Submit
+                        <i class="material-icons right">send</i>
+                      </button>
+                      </form>
+                      <form action="/day" method="GET">
+                      <button class="btn waves-effect waves-light blue" type="submit" name="action">View Log
+                        <i class="material-icons right">calendar_today</i>
+                      </button>      
+                      </form>
+                
+        
+        </div>
+
 </div>
+    </div>
+</main>

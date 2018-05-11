@@ -3,6 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>Baby Tracker</title>
     <!-- Materialize Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
@@ -11,6 +13,7 @@
         crossorigin="anonymous">
     <!-- Local CSS -->
     <link rel="stylesheet" href="/assets/css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
@@ -18,47 +21,56 @@
     <div class="container">
 
         <div class="row section">
- 
+
             <div class="col s12">
-                <h1 class="center-align">Baby Tracker</h1>
+                <h3 class="center-align">Baby Tracker</h3>
             </div>
 
         </div>
 
         <main>
             <div class="row">
-            <div class="col s12">
-                <input type="text" class="datepicker">
-            </div>
-           
-           
-            <div class="col s12">
-                <input type="text" class="timepicker">
-            </div>
-           
-            <div id="checkbox" class="col s12 input-field">
-                <form action="#">
-                    <p>
-                        <label>
-                            <input type="checkbox" />
-                            <span>Poop</span>
-                        </label>
-                    </p>
-                    <p>
-                        <label>
-                            <input type="checkbox" checked="checked" />
-                            <span>Pee</span>
-                        </label>
-                        <input placeholder="Placeholder" id="first_name" type="text" class="validate">
-                        <label for="first_name">Milk?</label>
-                    </p>
-                </form>
-        
-        </div>
+                <form class="inline" action="#">
+                    <div class="col s12">
+                        <input type="text" class="datepicker" placeholder="Select Date">
+                    </div>
 
-</div>
+
+                    <div class="col s12">
+                        <input type="text" class="timepicker" placeholder="Select Time">
+                    </div>
+
+                    <div id="checkbox" class="col s12 input-field">
+
+                        <p>
+                            <label>
+                                <input type="checkbox" />
+                                <span>Poop?</span>
+                            </label>
+                        </p>
+                        <p>
+                            <label>
+                                <input type="checkbox" />
+                                <span>Pee?</span>
+                            </label>
+                            <input placeholder="# of Oz" id="first_name" type="text" class="validate">
+                            <label for="first_name">How much Milk did she drink?</label>
+                        </p>
+                        <button class="btn waves-effect waves-light red" type="submit" name="action">Submit
+                            <i class="material-icons right">send</i>
+                        </button>
+                </form>
+                <form action="/day">
+                    <button class="btn waves-effect waves-light blue" type="submit" name="action">View Log
+                        <i class="material-icons right">calendar_today</i>
+                    </button>
+                </form>
+
+                </div>
+
+            </div>
     </div>
-</main>
+    </main>
     <!--Body Here-->
 </body>
 <!-- Compiled and minified JavaScript -->

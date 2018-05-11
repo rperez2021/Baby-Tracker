@@ -1,0 +1,61 @@
+<div class="container">
+
+  <div class="row section">
+
+    <div class="col s12 center-align">
+      <h3 class="center-align">Baby Daily Log</h3>
+      <h3 class="center-align">Date</h3>
+      <button class="btn waves-effect waves-light red" type="submit" name="action">Prev Day
+        <i class="material-icons left">keyboard_arrow_left</i>
+      </button>
+      <button class="btn waves-effect waves-light red" type="submit" name="action">Next Day
+        <i class="material-icons right">keyboard_arrow_right</i>
+      </button>
+    </div>
+
+  </div>
+
+  <main>
+    <div class="row">
+      {{#each log}}
+      <div class="col s3">
+        <div class="row">
+          <div class="col s12 center-align border time">{{this.time}}</div>
+          <div class="col s12 center-align border milk">{{this.milk_total}}</div>
+          <div class="col s6 center-align border poop">{{#if this.poop}}&#x1F4A9;{{/if}}</div>
+          <div class="col s6 center-align border pee">{{#if this.pee}}&#x1F4A7;{{/if}}</div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+
+
+
+
+    <div class="row">
+      <div class="col s12 center-align">
+        <div class="card">
+          <div class="card-image">
+            <img src="assets/img/cjperez.jpg">
+          </div>
+          <div class="card-content">
+            <h5>Today's Stats</h5>
+            <p>Milk Drank: {{other_data.one}} Oz</p>
+            <p>Poops: {{other_data.two}} &#x1F4A9;</p>
+            <p>Pees: {{other_data.three}} &#x1F4A7;</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <form action="/" method="GET">
+      <button class="btn waves-effect waves-light blue" type="submit" name="action">Input
+        <i class="material-icons right">calendar_today</i>
+      </button>
+    </form>
+
+</div>
+</div>
+</div>
+</main>

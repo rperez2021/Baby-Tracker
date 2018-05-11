@@ -11,7 +11,7 @@ var log = sequelize.define('log', {
     type: Sequelize.DATEONLY
   },
   time: {
-    type: Sequelize.INTEGER
+    type: Sequelize.STRING(10)
   },
   poop: {
     type: Sequelize.BOOLEAN,
@@ -22,7 +22,8 @@ var log = sequelize.define('log', {
     defaultValue: false
   },
   milk_total: {
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
+    defaultValue: 0
   }
 })
 

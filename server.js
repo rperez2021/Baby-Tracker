@@ -2,7 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
 const PORT = process.env.PORT || 8080
-const routes = require('./controllers/log_controllers.js')
+const routes = require('./controllers/log_controller.js')
 const exphbs = require('express-handlebars')
 
 // Express Static Folder
