@@ -1,7 +1,7 @@
 var express = require('express')
 var router = express.Router()
 const log = require('../models/log.js')
-var moment = require('moment') 
+var moment = require('moment')
 
 
 // var dd = today.getDate()
@@ -53,10 +53,14 @@ router.get('/day', (req, res) => {
       date: today
     },
     order: ['time']
-  }).then(function (result) {
+  }).then(function (result, reject) {
+    let yesterday = today
+    console.log("Result Log Here:" + result)
+    console.log("Reject line here:" + reject)
     let poopCount = 0
     let peeCount = 0
     let milkTotal = 0
+    let adjustedDate = 0
     result.forEach(function (element, index, array) {
       if (element.dataValues.poop === true) {
         poopCount += 1
@@ -67,13 +71,19 @@ router.get('/day', (req, res) => {
       milkTotal += element.dataValues.milk_total
     })
     console.log('poops:' + poopCount)
-    console.log(result[0].date)
-    var adjustedDate = moment(result[0].date, 'YYYY-MM-DD').format('MMMM DD, YYYY')
+    if (reject === undefined) {
+      adjustedDate = moment(new Date()).format('MMM Do YY') + ' (No Entries Logged Today)'
+    } else {
+      adjustedDate = moment(result[0].date, 'YYYY-MM-DD').format('MMMM DD, YYYY')
+    }
     let totals = {
       one: milkTotal,
       two: poopCount,
       three: peeCount,
-      four: adjustedDate
+      four: adjustedDate,
+      five: yesterday.getFullYear(),
+      six: yesterday.getMonth() + 1,
+      seven: yesterday.getDate() - 1
     }
     var handlebarsData = { log: result, other_data: totals }
     console.log(handlebarsData)
@@ -93,21 +103,22 @@ router.post('/', (req, res) => {
   })
 })
 
-router.get('/date/:yyyy/:mm/:dd', function (req, res) {
+router.get('/prev/:yyyy/:mm/:dd/', function (req, res) {
   let today = new Date(req.params.yyyy + ',' + req.params.mm + ',' + req.params.dd)
   let yesterday = new Date(req.params.yyyy + ',' + req.params.mm + ',' + req.params.dd)
-  yesterday.setDate(yesterday.getDate()-1)
   console.log(today)
   console.log(yesterday)
   console.log(yesterday.getFullYear())
-  console.log(yesterday.getMonth())
+  console.log(yesterday.getMonth() + 1)
+  console.log(yesterday.getDate() - 1)
   console.log(yesterday.getDate())
   log.findAll({
     where: {
       date: today
     },
     order: ['time']
-  }).then(function (result) {
+  }).then(function (result, reject) {
+    let adjustedDate = 0
     let poopCount = 0
     let peeCount = 0
     let milkTotal = 0
@@ -120,16 +131,21 @@ router.get('/date/:yyyy/:mm/:dd', function (req, res) {
       }
       milkTotal += element.dataValues.milk_total
     })
+    if (reject === undefined) {
+      adjustedDate = moment(new Date()).format('MMM Do YY') + ' (No Entries Logged Today)'
+    } else {
+      adjustedDate = moment(result[0].date, 'YYYY-MM-DD').format('MMMM DD, YYYY')
+    }
     console.log('poops:' + poopCount)
-    var adjustedDate = moment(today, 'YYYY,MM,DD').format('MMMM DD, YYYY')
+    adjustedDate = moment(today, 'YYYY,MM,DD').format('MMMM DD, YYYY')
     let totals = {
       one: milkTotal,
       two: poopCount,
       three: peeCount,
       four: adjustedDate,
       five: yesterday.getFullYear(),
-      six: yesterday.getMonth(),
-      seven: yesterday.getDate()
+      six: yesterday.getMonth() + 1,
+      seven: yesterday.getDate() - 1
     }
     var handlebarsData = { log: result, other_data: totals }
     res.render('day', handlebarsData)
@@ -138,16 +154,55 @@ router.get('/date/:yyyy/:mm/:dd', function (req, res) {
   })
 })
 
-router.post('/burgers/re_add/:id', function (req, res) {
-  burger.update({
-    devoured: false
-  },
-    { where: { id: req.params.id } })
-    .then(function (res) {
-      res.redirect('/')
-    }).catch(function (error) {
-      console.log(error)
+router.get('/next/:yyyy/:mm/:dd/', function (req, res) {
+  let today = new Date(req.params.yyyy + ',' + req.params.mm + ',' + req.params.dd)
+  let yesterday = new Date(req.params.yyyy + ',' + req.params.mm + ',' + req.params.dd)
+  console.log(today)
+  console.log(yesterday)
+  console.log(yesterday.getFullYear())
+  console.log(yesterday.getMonth() + 1)
+  console.log(yesterday.getDate() - 1)
+  console.log(yesterday.getDate())
+  log.findAll({
+    where: {
+      date: today
+    },
+    order: ['time']
+  }).then(function (result, reject) {
+    let adjustedDate = 0
+    let poopCount = 0
+    let peeCount = 0
+    let milkTotal = 0
+    result.forEach(function (element, index, array) {
+      if (element.dataValues.poop === true) {
+        poopCount += 1
+      }
+      if (element.dataValues.pee === true) {
+        peeCount += 1
+      }
+      milkTotal += element.dataValues.milk_total
     })
+    if (reject === undefined) {
+      adjustedDate = moment(new Date()).format('MMM Do YY') + ' (No Entries Logged Today)'
+    } else {
+      adjustedDate = moment(result[0].date, 'YYYY-MM-DD').format('MMMM DD, YYYY')
+    }
+    console.log('poops:' + poopCount)
+    adjustedDate = moment(today, 'YYYY,MM,DD').format('MMMM DD, YYYY')
+    let totals = {
+      one: milkTotal,
+      two: poopCount,
+      three: peeCount,
+      four: adjustedDate,
+      five: yesterday.getFullYear(),
+      six: yesterday.getMonth() + 1,
+      seven: yesterday.getDate() + 1
+    }
+    var handlebarsData = { log: result, other_data: totals }
+    res.render('day', handlebarsData)
+  }).catch(function (error) {
+    console.log(error)
+  })
 })
 
 module.exports = router

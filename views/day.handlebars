@@ -5,12 +5,12 @@
     <div class="col s12 center-align">
       <h3 class="center-align">Baby Daily Log</h3>
       <h3 class="center-align">{{other_data.four}}</h3>
-      <form action="/date/{{other_data.five}}/{{other_data.six}}/{{other_data.seven}}" method="GET">
+      <form action="/prev/{{other_data.five}}/{{other_data.six}}/{{other_data.seven}}" method="GET">
       <button class="btn waves-effect waves-light red" id="prevday" type="submit" name="action">Prev Day
         <i class="material-icons left">keyboard_arrow_left</i>
       </button>
       </form>
-      <form>
+      <form action="/next/{{other_data.five}}/{{other_data.six}}/{{other_data.seven}}" method="GET">
       <button class="btn waves-effect waves-light red" id="nextday" type="submit" name="action">Next Day
         <i class="material-icons right">keyboard_arrow_right</i>
       </button>
