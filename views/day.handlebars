@@ -4,13 +4,17 @@
 
     <div class="col s12 center-align">
       <h3 class="center-align">Baby Daily Log</h3>
-      <h3 class="center-align">Date</h3>
-      <button class="btn waves-effect waves-light red" type="submit" name="action">Prev Day
+      <h3 class="center-align">{{other_data.four}}</h3>
+      <form action="/date/{{other_data.five}}/{{other_data.six}}/{{other_data.seven}}" method="GET">
+      <button class="btn waves-effect waves-light red" id="prevday" type="submit" name="action">Prev Day
         <i class="material-icons left">keyboard_arrow_left</i>
       </button>
-      <button class="btn waves-effect waves-light red" type="submit" name="action">Next Day
+      </form>
+      <form>
+      <button class="btn waves-effect waves-light red" id="nextday" type="submit" name="action">Next Day
         <i class="material-icons right">keyboard_arrow_right</i>
       </button>
+      </form>
     </div>
 
   </div>
@@ -36,7 +40,7 @@
       <div class="col s12 center-align">
         <div class="card">
           <div class="card-image">
-            <img src="assets/img/cjperez.jpg">
+            <img src="/assets/img/cjperez.jpg">
           </div>
           <div class="card-content">
             <h5>Today's Stats</h5>

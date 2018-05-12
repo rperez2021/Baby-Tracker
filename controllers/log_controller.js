@@ -1,21 +1,22 @@
 var express = require('express')
 var router = express.Router()
 const log = require('../models/log.js')
+var moment = require('moment') 
 
-var today = new Date()
-var dd = today.getDate()
-var mm = today.getMonth() + 1 //January is 0!
-var yyyy = today.getFullYear()
 
-if (dd < 10) {
-  dd = '0' + dd
-}
+// var dd = today.getDate()
+// var mm = today.getMonth() + 1 //January is 0!
+// var yyyy = today.getFullYear()
 
-if (mm < 10) {
-  mm = '0' + mm
-}
+// if (dd < 10) {
+//   dd = '0' + dd
+// }
 
-today = mm + '/' + dd + '/' + yyyy
+// if (mm < 10) {
+//   mm = '0' + mm
+// }
+
+// today = mm + '/' + dd + '/' + yyyy
 
 router.get('/', (req, res) => {
   res.render('index')
@@ -46,6 +47,7 @@ router.post('/log', (req, res) => {
 })
 
 router.get('/day', (req, res) => {
+  var today = new Date()
   log.findAll({
     where: {
       date: today
@@ -56,8 +58,6 @@ router.get('/day', (req, res) => {
     let peeCount = 0
     let milkTotal = 0
     result.forEach(function (element, index, array) {
-      console.log('Hello', index)
-      console.log(element.dataValues.poop)
       if (element.dataValues.poop === true) {
         poopCount += 1
       }
@@ -67,13 +67,16 @@ router.get('/day', (req, res) => {
       milkTotal += element.dataValues.milk_total
     })
     console.log('poops:' + poopCount)
+    console.log(result[0].date)
+    var adjustedDate = moment(result[0].date, 'YYYY-MM-DD').format('MMMM DD, YYYY')
     let totals = {
       one: milkTotal,
       two: poopCount,
-      three: peeCount
+      three: peeCount,
+      four: adjustedDate
     }
     var handlebarsData = { log: result, other_data: totals }
-    console.log(result[0])
+    console.log(handlebarsData)
     res.render('day', handlebarsData)
   }).catch(function (error) {
     console.log(error)
@@ -90,17 +93,51 @@ router.post('/', (req, res) => {
   })
 })
 
-router.post('/burgers/:id', function (req, res) {
-  burger.update({
-    devoured: true
-  },
-    { where: { id: req.params.id } })
-    .then(function (res) {
-      res.redirect('/')
-    }).catch(function (error) {
-      console.log(error)
+router.get('/date/:yyyy/:mm/:dd', function (req, res) {
+  let today = new Date(req.params.yyyy + ',' + req.params.mm + ',' + req.params.dd)
+  let yesterday = new Date(req.params.yyyy + ',' + req.params.mm + ',' + req.params.dd)
+  yesterday.setDate(yesterday.getDate()-1)
+  console.log(today)
+  console.log(yesterday)
+  console.log(yesterday.getFullYear())
+  console.log(yesterday.getMonth())
+  console.log(yesterday.getDate())
+  log.findAll({
+    where: {
+      date: today
+    },
+    order: ['time']
+  }).then(function (result) {
+    let poopCount = 0
+    let peeCount = 0
+    let milkTotal = 0
+    result.forEach(function (element, index, array) {
+      if (element.dataValues.poop === true) {
+        poopCount += 1
+      }
+      if (element.dataValues.pee === true) {
+        peeCount += 1
+      }
+      milkTotal += element.dataValues.milk_total
     })
+    console.log('poops:' + poopCount)
+    var adjustedDate = moment(today, 'YYYY,MM,DD').format('MMMM DD, YYYY')
+    let totals = {
+      one: milkTotal,
+      two: poopCount,
+      three: peeCount,
+      four: adjustedDate,
+      five: yesterday.getFullYear(),
+      six: yesterday.getMonth(),
+      seven: yesterday.getDate()
+    }
+    var handlebarsData = { log: result, other_data: totals }
+    res.render('day', handlebarsData)
+  }).catch(function (error) {
+    console.log(error)
+  })
 })
+
 router.post('/burgers/re_add/:id', function (req, res) {
   burger.update({
     devoured: false

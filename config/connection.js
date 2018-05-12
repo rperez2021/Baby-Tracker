@@ -1,16 +1,26 @@
-const Sequelize = require('sequelize');
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
-  ssl: true,
+const Sequelize = require('sequelize')
+const sequelize = new Sequelize('baby_tracker', 'postgres', 'Thanatos1!', {
+  host: 'localhost',
+  port: 5432,
   dialect: 'postgres',
-  protocol: 'postgres',
-  logging: true
-});
 
-const User = sequelize.define('user', {
-  username: Sequelize.STRING,
-  birthday: Sequelize.DATE
-});
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000
+  },
 
-sequelize.sync()
+  operatorsAliases: false
+})
 
-module.exports = sequelize;
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.')
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err)
+  })
+
+module.exports = sequelize
